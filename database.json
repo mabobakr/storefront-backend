@@ -1,19 +1,20 @@
 {
     "dev": {
         "driver": "pg",
-        "user": { "ENV": "user" },
+        "username": { "ENV": "user" },
         "password": { "ENV": "password" },
-        "host": { "ENV":"host"},
+        "host": { "ENV": "host" },
         "database": "storefront_dev",
-        "port": "20144"
+        "port": { "ENV": "database_port" }
     },
 
     "test": {
-      "driver": "pg",
-      "user": { "ENV": "user" },
-      "password": { "ENV": "password" },
-      "host": { "ENV":"host"},
-      "database": "storefront_test",
-      "port": "20100"
-  }
+        "driver": "pg",
+        "username": { "ENV": "user" },
+        "password": { "ENV": "password" },
+        "host": { "ENV": "host" },
+        "database": "storefront_test",
+        "port": { "ENV": "database_port" }
+    },
+    "sql-file": true
 }
