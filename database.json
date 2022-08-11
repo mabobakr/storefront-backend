@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "driver": "pg",
+        "user": { "ENV": "user" },
+        "password": { "ENV": "password" },
+        "host": { "ENV":"host"},
+        "database": "storefront_dev",
+        "port": "20144"
+    },
+
+    "test": {
+      "driver": "pg",
+      "user": { "ENV": "user" },
+      "password": { "ENV": "password" },
+      "host": { "ENV":"host"},
+      "database": "storefront_test",
+      "port": "20100"
+  }
+}
