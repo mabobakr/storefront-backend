@@ -4,7 +4,7 @@
         "username": { "ENV": "user" },
         "password": { "ENV": "password" },
         "host": { "ENV": "host" },
-        "database": "storefront_dev",
+        "database": { "ENV": "db" },
         "port": { "ENV": "database_port" }
     },
 
@@ -13,7 +13,7 @@
         "username": { "ENV": "user" },
         "password": { "ENV": "password" },
         "host": { "ENV": "host" },
-        "database": "storefront_test",
+        "database": { "ENV": "test_db" },
         "port": { "ENV": "database_port" }
     },
     "sql-file": true
