@@ -2,7 +2,7 @@ import { ProductTable } from '../models/products';
 import { Request, Response, Application, NextFunction } from 'express';
 import { checkSchema, validationResult, matchedData } from 'express-validator';
 import { createSchema, showSchema } from '../validators/product_schema';
-
+import createError from 'http-errors';
 
 async function productsHandler(app: Application) {
     app.get('/products', indexMiddleware);
@@ -15,9 +15,14 @@ const indexMiddleware = async (
     res: Response,
     next: NextFunction
 ) => {
-    const table = new ProductTable();
-    const result = await table.index();
-    res.status(200).json({ products: result });
+    try {
+        const table = new ProductTable();
+        const result = await table.index();
+        res.status(200).json({ products: result });
+    } catch (err) {
+        console.log(err);
+        return next(createError(500, "couldn't get the products"));
+    }
 };
 
 const showMiddleware = async (
@@ -25,9 +30,25 @@ const showMiddleware = async (
     res: Response,
     next: NextFunction
 ) => {
-    const id = parseInt(req.params.id);
-    const table = new ProductTable();
-    const result = await table.show(id);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    let result;
+    try {
+        const id = parseInt(req.params.id);
+        const table = new ProductTable();
+        result = await table.show(id);
+    } catch (err) {
+        console.log(err);
+        return next(createError(500, "couldn't get the product"));
+    }
+
+    if (result === undefined) {
+        return next(createError(404, 'product is not found'));
+    }
+
     res.status(200).json(result);
 };
 
@@ -44,14 +65,19 @@ const createMiddleware = async (
 
     const bodyData = matchedData(req, { locations: ['body'] });
 
-    const table = new ProductTable();
-    const { name, price, category } = bodyData;
-    const result = await table.create(
-        name as string,
-        parseInt(price as string),
-        category as string
-    );
-    res.status(200).json(result);
+    try {
+        const table = new ProductTable();
+        const { name, price, category } = bodyData;
+        const result = await table.create(
+            name as string,
+            parseInt(price as string),
+            category as string
+        );
+        res.status(200).json(result);
+    } catch (err) {
+        console.log(err);
+        return next(createError(500, "Couldn't create the product"));
+    }
 };
 
 export default productsHandler;

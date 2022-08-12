@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
+import errorMiddleware from './error';
 import productsHandler from './handlers/product_handler';
 
 dotenv.config();
@@ -23,4 +23,5 @@ app.listen(process.env.PORT, function () {
 
 productsHandler(app);
 
+app.use(errorMiddleware);
 export default app;
