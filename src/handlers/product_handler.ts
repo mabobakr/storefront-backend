@@ -5,7 +5,7 @@ import { createSchema, showSchema } from '../validators/product_schema';
 import createError from 'http-errors';
 import { verifyAuth } from '../middlewares/auth';
 
-function productsRoutes(app: Application) {
+export default function productsRoutes(app: Application) {
     app.get('/products', indexMiddleware);
     app.get('/products/:id', checkSchema(showSchema), showMiddleware);
     app.post(
@@ -84,5 +84,3 @@ const createMiddleware = async (
         return next(createError(500, "Couldn't create the product"));
     }
 };
-
-export default productsRoutes;

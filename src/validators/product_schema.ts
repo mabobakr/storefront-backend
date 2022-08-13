@@ -14,13 +14,13 @@ export const createSchema: Schema = {
     },
     price: {
         in: ['body'],
-        errorMessage: 'Body should price, it must be a number',
+        errorMessage: 'Body should contain price, it must be a number',
         isFloat: true,
     },
     category: {
         in: 'body',
         errorMessage:
-            'Body should containt category that is at least 3 characters long',
+            'Body should contain category that is at least 3 characters long',
         isLength: {
             options: {
                 min: 3,

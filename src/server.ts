@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import errorMiddleware from './middlewares/error';
 import productsRoutes from './handlers/product_handler';
 import userRoutes from './handlers/user_handler';
+import orderRoutes from './handlers/order_handler';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.listen(process.env.PORT, function () {
 
 productsRoutes(app);
 userRoutes(app);
+orderRoutes(app);
 
 app.use(errorMiddleware);
 export default app;
