@@ -10,7 +10,7 @@ export type User = {
 export class UserTable {
     async index(): Promise<User[]> {
         const conn = await Client.connect();
-        const sql = 'SELECT * FROM users;';
+        const sql = 'SELECT id, firstName, lastName FROM users;';
         const result = await conn.query(sql);
         conn.release();
         return result.rows;
@@ -18,7 +18,7 @@ export class UserTable {
 
     async show(id: number): Promise<User> {
         const conn = await Client.connect();
-        const sql = 'select * from users where id=($1)';
+        const sql = 'select id, firstName, lastName from users where id=($1)';
         const result = await conn.query(sql, [id]);
         conn.release();
         return result.rows[0];

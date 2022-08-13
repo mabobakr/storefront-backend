@@ -8,6 +8,6 @@ export const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
         jwt.verify(token, process.env.TOKEN_SECRET as unknown as string);
         next();
     } catch (err) {
-        res.status(401);
+        res.status(401).json({ error: 'Unauthorized' });
     }
 };

@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import errorMiddleware from './error';
+import errorMiddleware from './middlewares/error';
 import productsRoutes from './handlers/product_handler';
 import userRoutes from './handlers/user_handler';
 

@@ -1,5 +1,6 @@
 import { Application, Response, Request, NextFunction } from 'express';
 import { UserTable } from '../models/users';
+import { OrderTable } from '../models/orders';
 import createError from 'http-errors';
 import { showSchema, createSchema } from '../validators/user_schema';
 import { checkSchema, validationResult, matchedData } from 'express-validator';
@@ -11,9 +12,11 @@ export default function userRoutes(app: Application) {
     app.get('/users', verifyAuth, indexMiddleware);
     app.get('/users/:id', verifyAuth, checkSchema(showSchema), showMiddleware);
     app.post('/users', checkSchema(createSchema), createMiddleware);
+    app.get('/users/:id/orders', checkSchema(showSchema), showOrdersMiddleware);
 }
 
 const table = new UserTable();
+const orderTable = new OrderTable();
 
 const indexMiddleware = async (
     req: Request,
@@ -97,5 +100,23 @@ const createMiddleware = async (
         res.status(200).json({ user: result, token: token });
     } catch (err) {
         return next(createError(500, "Couldn't create user"));
+    }
+};
+
+const showOrdersMiddleware = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const result = await orderTable.showOrders(parseInt(req.params.id));
+        res.status(200).json({ orders: result });
+    } catch (err) {
+        next(createError(500, "couldn't get the orders"));
     }
 };
