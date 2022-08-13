@@ -3,12 +3,20 @@ import { Request, Response, Application, NextFunction } from 'express';
 import { checkSchema, validationResult, matchedData } from 'express-validator';
 import { createSchema, showSchema } from '../validators/product_schema';
 import createError from 'http-errors';
+import { verifyAuth } from '../middlewares/auth';
 
-async function productsHandler(app: Application) {
+function productsRoutes(app: Application) {
     app.get('/products', indexMiddleware);
     app.get('/products/:id', checkSchema(showSchema), showMiddleware);
-    app.post('/products', checkSchema(createSchema), createMiddleware); // todo add authentication
+    app.post(
+        '/products',
+        verifyAuth,
+        checkSchema(createSchema),
+        createMiddleware
+    );
 }
+
+const table = new ProductTable();
 
 const indexMiddleware = async (
     req: Request,
@@ -16,7 +24,6 @@ const indexMiddleware = async (
     next: NextFunction
 ) => {
     try {
-        const table = new ProductTable();
         const result = await table.index();
         res.status(200).json({ products: result });
     } catch (err) {
@@ -38,7 +45,6 @@ const showMiddleware = async (
     let result;
     try {
         const id = parseInt(req.params.id);
-        const table = new ProductTable();
         result = await table.show(id);
     } catch (err) {
         console.log(err);
@@ -58,7 +64,6 @@ const createMiddleware = async (
     next: NextFunction
 ) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
@@ -66,13 +71,13 @@ const createMiddleware = async (
     const bodyData = matchedData(req, { locations: ['body'] });
 
     try {
-        const table = new ProductTable();
-        const { name, price, category } = bodyData;
-        const result = await table.create(
-            name as string,
-            parseInt(price as string),
-            category as string
-        );
+        const prod = {
+            name: bodyData.name,
+            price: bodyData.price,
+            category: bodyData.category,
+        };
+
+        const result = await table.create(prod);
         res.status(200).json(result);
     } catch (err) {
         console.log(err);
@@ -80,4 +85,4 @@ const createMiddleware = async (
     }
 };
 
-export default productsHandler;
+export default productsRoutes;

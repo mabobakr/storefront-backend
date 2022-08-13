@@ -1,7 +1,7 @@
 import Client from '../database';
 
 export type Product = {
-    id: number;
+    id?: number;
     name: string;
     price: number;
     category: string;
@@ -24,19 +24,18 @@ export class ProductTable {
         return result.rows[0];
     }
 
-    async create(
-        name: string,
-        price: number,
-        category: string
-    ): Promise<Product> {
+    async create(prod: Product): Promise<Product> {
         const conn = await Client.connect();
         const sql =
             'Insert into products(name, price, category) ' +
-            'values($1, $2, $3)';
-        let result = await conn.query(sql, [name, price, category]);
+            'values($1, $2, $3) returning *';
+        const result = await conn.query(sql, [
+            prod.name,
+            prod.price,
+            prod.category,
+        ]);
 
-        const postSql = "select * from products where name=$1 and price=$2 and category=$3"
-        result = await conn.query(postSql, [name, price, category]);
+        conn.release();
 
         return result.rows[0];
     }

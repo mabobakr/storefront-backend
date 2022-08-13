@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import errorMiddleware from './error';
-import productsHandler from './handlers/product_handler';
+import productsRoutes from './handlers/product_handler';
+import userRoutes from './handlers/user_handler';
 
 dotenv.config();
 
@@ -21,7 +22,8 @@ app.listen(process.env.PORT, function () {
     console.log(`starting app on: port ${process.env.PORT}`);
 });
 
-productsHandler(app);
+productsRoutes(app);
+userRoutes(app);
 
 app.use(errorMiddleware);
 export default app;

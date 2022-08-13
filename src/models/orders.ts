@@ -1,11 +1,7 @@
-
-
 export type Order = {
-  id: number,
-  userId: number,
-  status: string
-}
+    id: number;
+    userId: number;
+    status: string;
+};
 
-export class OrderTable {
-  
-}
+export class OrderTable {}
