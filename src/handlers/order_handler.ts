@@ -1,7 +1,7 @@
 import { Application, Request, Response, NextFunction } from 'express';
-import { OrderTable } from '../models/orders';
-import { UserTable } from '../models/users';
-import { OrderProductTable } from '../models/orders_products';
+import { OrderTable } from '../models/order';
+import { UserTable } from '../models/user';
+import { OrderProductTable } from '../models/order_product';
 import { verifyAuth } from '../middlewares/auth';
 import { checkSchema, validationResult, matchedData } from 'express-validator';
 import { createSchema } from '../validators/order_schema';
@@ -48,16 +48,16 @@ const createMiddleware = async (
     const bodyData = matchedData(req, { locations: ['body'] });
 
     try {
-        const userId = bodyData.userId;
+        const user_id = bodyData.user_id;
 
         // Check if user exists
         const userTable = new UserTable();
-        const user = await userTable.show(parseInt(userId));
+        const user = await userTable.show(parseInt(user_id));
         if (user == undefined) {
             return res.status(404).json({ error: 'User is not found' });
         }
 
-        const result = await table.create(userId);
+        const result = await table.create(user_id);
         res.status(200).json(result);
     } catch (err) {
         console.log(err);

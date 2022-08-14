@@ -1,4 +1,4 @@
-import { ProductTable } from '../models/products';
+import { ProductTable } from '../models/product';
 import { Request, Response, Application, NextFunction } from 'express';
 import { checkSchema, validationResult, matchedData } from 'express-validator';
 import { createSchema, showSchema } from '../validators/product_schema';

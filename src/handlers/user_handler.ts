@@ -1,6 +1,6 @@
 import { Application, Response, Request, NextFunction } from 'express';
-import { UserTable } from '../models/users';
-import { OrderProductTable } from '../models/orders_products';
+import { UserTable } from '../models/user';
+import { OrderProductTable } from '../models/order_product';
 import createError from 'http-errors';
 import { showSchema, createSchema } from '../validators/user_schema';
 import { checkSchema, validationResult, matchedData } from 'express-validator';
@@ -83,8 +83,8 @@ const createMiddleware = async (
     );
 
     const user = {
-        firstName: bodyData.firstName,
-        lastName: bodyData.lastName,
+        first_name: bodyData.firstName,
+        last_name: bodyData.lastName,
         password: hashedPassword,
     };
 
@@ -93,7 +93,7 @@ const createMiddleware = async (
 
         const jwtSecret = process.env.TOKEN_SECRET;
         const token = jwt.sign(
-            { id: result.id, firstName: result.firstName },
+            { id: result.id, first_name: result.first_name },
             jwtSecret as unknown as string
         );
 
