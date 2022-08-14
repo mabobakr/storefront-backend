@@ -8,8 +8,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Index  route: 'products/' [GET]
 - Show   route: 'products/:id' [GET]
 - Create [token required]   route: 'products/' [POST]
-- [OPTIONAL] Top 5 most popular products  route: '/products/popular' [GET] 
-- [OPTIONAL] Products by category (args: product category)  route: 'products/?category=' [GET]
+- [OPTIONAL - not implemented] Top 5 most popular products  route: '/products/popular' [GET] 
+- [OPTIONAL - not implemented] Products by category (args: product category)  route: 'products/?category=' [GET]
 
 #### Users
 - Index [token required]    route: 'users/' [GET]
@@ -18,15 +18,16 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 - Current Order by user (args: user id)[token required] route: 'users/:id/orders?status=active' [GET]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required] route: 'users/:id/orders?status=completed' [GET]
+- [OPTIONAL - not implemented] Completed Orders by user (args: user id)[token required] route: 'users/:id/orders?status=completed' [GET]
 
 - Create order route: 'orders/' [POST]
 - Add product  router: 'orders/products' [POST]
 
-Products(id integer, name varchar, price integer, category varchar)
-users(id integer, first_name varchar, last_name varchar)
-orders(id integer, user_id integer [foreign key], status varchar)
-orders_products(product_id integer [foreign key], order_id integer [foreign key], quantity integer)
+## Database Schema
+- Products(id integer, name varchar, price integer, category varchar)
+- users(id integer, first_name varchar, last_name varchar)
+- orders(id integer, user_id integer [foreign key], status varchar)
+- orders_products(product_id integer [foreign key], order_id integer [foreign key], quantity integer)
 
 ## Data Shapes
 #### Product
