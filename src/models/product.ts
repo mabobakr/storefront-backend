@@ -51,4 +51,15 @@ export class ProductTable {
             throw new Error("Couldn't create product");
         }
     }
+
+    async delete() {
+        try {
+            const conn = await Client.connect();
+            const sql = 'delete from products;';
+            await conn.query(sql);
+            conn.release();
+        } catch (err) {
+            throw new Error("Couldn't delete products");
+        }
+    }
 }

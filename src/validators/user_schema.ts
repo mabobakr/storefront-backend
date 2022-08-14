@@ -1,18 +1,18 @@
 import { Schema } from 'express-validator';
 
 export const createSchema: Schema = {
-    firstName: {
+    first_name: {
         in: 'body',
         errorMessage:
-            'Body should containt firstName that is at least 3 characters long',
+            'Body should containt first_name that is at least 3 characters long',
         isLength: {
             options: { min: 3, max: 256 },
         },
     },
-    lastName: {
+    last_name: {
         in: 'body',
         errorMessage:
-            'Body should containt lastName that is at least 3 characters long',
+            'Body should containt last_name that is at least 3 characters long',
         isLength: {
             options: { min: 3, max: 256 },
         },

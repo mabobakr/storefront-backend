@@ -34,4 +34,15 @@ export class OrderTable {
             throw new Error("Couldn't create order");
         }
     }
+
+    async delete() {
+        try {
+            const conn = await Client.connect();
+            const sql = 'delete from orders;';
+            await conn.query(sql);
+            conn.release();
+        } catch (err) {
+            throw new Error("Couldn't delete orders");
+        }
+    }
 }

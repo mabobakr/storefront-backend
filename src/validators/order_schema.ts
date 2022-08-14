@@ -2,7 +2,7 @@ import { Schema } from "express-validator";
 
 
 export const createSchema: Schema = {
-  userId: {
+  user_id: {
       in: ['body'],
       errorMessage: 'Body should contain userId',
       isInt: true,

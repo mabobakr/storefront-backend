@@ -1,12 +1,12 @@
 import { Schema } from 'express-validator';
 
 export const order_product_Schema: Schema = {
-    productId: {
+    product_id: {
         in: ['body'],
         errorMessage: 'Body should contain productId',
         isInt: true,
     },
-    orderId: {
+    order_id: {
         in: ['body'],
         errorMessage: 'Body should contain orderId',
         isInt: true,
