@@ -3,6 +3,9 @@ import { UserTable } from '../../models/user';
 const table = new UserTable();
 
 describe('user Model', () => {
+    afterAll(async () => {
+        await table.delete();
+    });
     it('it should create an object', async () => {
         const user = {
             first_name: 'first name',
@@ -10,17 +13,19 @@ describe('user Model', () => {
             password: 'password',
         };
         const res = await table.create(user);
+
         expect(res).toEqual({
-            id: 1,
+            id: 2,
             first_name: 'first name',
             last_name: 'last name',
         });
     });
 
     it('Should show the correct object', async () => {
-        const res = await table.show(1);
+        const res = await table.show(2);
+
         expect(res).toEqual({
-            id: 1,
+            id: 2,
             first_name: 'first name',
             last_name: 'last name',
         });
@@ -28,9 +33,10 @@ describe('user Model', () => {
 
     it('Should return a list of users', async () => {
         const res = await table.index();
+
         expect(res).toEqual([
             {
-                id: 1,
+                id: 2,
                 first_name: 'first name',
                 last_name: 'last name',
             },

@@ -3,6 +3,9 @@ import { ProductTable } from '../../models/product';
 const table = new ProductTable();
 
 describe('Product Model', () => {
+    afterAll(async () => {
+        await table.delete();
+    });
     it('it should create an object', async () => {
         const prod = {
             name: 'product name',

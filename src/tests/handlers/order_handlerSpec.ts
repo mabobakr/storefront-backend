@@ -13,22 +13,28 @@ const token = jwt.sign(
 );
 
 describe('Order routes', () => {
-    it('Should return 200 on Get /orders', async () => {
-        const res = await request(app)
-            .get('/orders')
-            .set('Authorization', `Bearer ${token}`);
-        expect(res.statusCode).toBe(200);
+    describe('GET /orders', () => {
+        it('Should return 200 on Get /orders', async () => {
+            const res = await request(app)
+                .get('/orders')
+                .set('Authorization', `Bearer ${token}`);
+            expect(res.statusCode).toBe(200);
+        });
     });
 
-    it('Should return 400 on POST /orders with token', async () => {
-        const res = await request(app)
-            .post('/orders')
-            .set('Authorization', `Bearer ${token}`);
-        expect(res.statusCode).toBe(400);
+    describe('POST /orders', () => {
+        it('Should return 400 on POST /orders with token', async () => {
+            const res = await request(app)
+                .post('/orders')
+                .set('Authorization', `Bearer ${token}`);
+            expect(res.statusCode).toBe(400);
+        });
     });
 
-    it('Should return 401 on POST /orders/products without token', async () => {
-        const res = await request(app).post('/orders/products');
-        expect(res.statusCode).toBe(401);
+    describe('POST /orders/products', () => {
+        it('Should return 401 on POST /orders/products without token', async () => {
+            const res = await request(app).post('/orders/products');
+            expect(res.statusCode).toBe(401);
+        });
     });
 });

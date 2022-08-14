@@ -83,11 +83,11 @@ const createMiddleware = async (
     );
 
     const user = {
-        first_name: bodyData.firstName,
-        last_name: bodyData.lastName,
+        first_name: bodyData.first_name,
+        last_name: bodyData.last_name,
         password: hashedPassword,
     };
-
+    
     try {
         const result = await table.create(user);
 
