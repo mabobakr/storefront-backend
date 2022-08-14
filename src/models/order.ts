@@ -2,7 +2,7 @@ import Client from '../database';
 
 export type Order = {
     id?: number;
-    userId: number;
+    user_id: number;
     status: string;
 };
 
@@ -15,12 +15,12 @@ export class OrderTable {
         return result.rows;
     }
 
-    async create(userId: number): Promise<Order> {
+    async create(user_id: number): Promise<Order> {
         const conn = await Client.connect();
         const sql =
-            'Insert into orders(userId, status) ' +
+            'Insert into orders(user_id, status) ' +
             "values($1, 'acive') returning *";
-        const result = await conn.query(sql, [userId]);
+        const result = await conn.query(sql, [user_id]);
 
         conn.release();
 
