@@ -14,7 +14,9 @@ const token = jwt.sign(
 
 describe('Order routes', () => {
     it('Should return 200 on Get /orders', async () => {
-        const res = await request(app).get('/orders');
+        const res = await request(app)
+            .get('/orders')
+            .set('Authorization', `Bearer ${token}`);
         expect(res.statusCode).toBe(200);
     });
 
