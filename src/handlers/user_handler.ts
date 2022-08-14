@@ -77,7 +77,7 @@ const createMiddleware = async (
     const pepper = process.env.BCRYPT_PASSWORD;
     const saltRounds = process.env.SALT_ROUNDS;
 
-    const hashedPassword = await bcrypt.hash(
+    const hashedPassword = bcrypt.hashSync(
         bodyData.password + pepper,
         parseInt(saltRounds as unknown as string)
     );
