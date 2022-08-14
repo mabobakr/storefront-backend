@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "jasmine": "jasmine",
     "watch": "tsc-watch --rootDir ./src --watch --outDir ./build --onSuccess \"node build/server.js\"",
-    "test": "ENV=test db-migrate db:create storefront_test && db-migrate --env test up && npm run build && npm run jasmine && db-migrate db:drop storefront_test",
+    "test": "set ENV=test& db-migrate db:drop storefront_test && db-migrate db:create storefront_test && db-migrate --env test up && npm run build && npm run jasmine",
     "eslint": "eslint src/**/*.ts",
     "prettier": "prettier --config ./.prettierrc  src/**/*.ts --write"
   },
