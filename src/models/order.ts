@@ -8,22 +8,30 @@ export type Order = {
 
 export class OrderTable {
     async index(): Promise<Order[]> {
-        const conn = await Client.connect();
-        const sql = 'select * from orders;';
-        const result = await conn.query(sql);
-        conn.release();
-        return result.rows;
+        try {
+            const conn = await Client.connect();
+            const sql = 'select * from orders;';
+            const result = await conn.query(sql);
+            conn.release();
+            return result.rows;
+        } catch (err) {
+            throw new Error("Couldn't get orders");
+        }
     }
 
     async create(user_id: number): Promise<Order> {
-        const conn = await Client.connect();
-        const sql =
-            'Insert into orders(user_id, status) ' +
-            "values($1, 'acive') returning *";
-        const result = await conn.query(sql, [user_id]);
+        try {
+            const conn = await Client.connect();
+            const sql =
+                'Insert into orders(user_id, status) ' +
+                "values($1, 'acive') returning *";
+            const result = await conn.query(sql, [user_id]);
 
-        conn.release();
+            conn.release();
 
-        return result.rows[0];
+            return result.rows[0];
+        } catch (err) {
+            throw new Error("Couldn't create order");
+        }
     }
 }
