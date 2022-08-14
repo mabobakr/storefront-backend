@@ -15,17 +15,17 @@ describe('user Model', () => {
         const res = await table.create(user);
 
         expect(res).toEqual({
-            id: 2,
+            id: 3,
             first_name: 'first name',
             last_name: 'last name',
         });
     });
 
     it('Should show the correct object', async () => {
-        const res = await table.show(2);
+        const res = await table.show(3);
 
         expect(res).toEqual({
-            id: 2,
+            id: 3,
             first_name: 'first name',
             last_name: 'last name',
         });
@@ -36,7 +36,7 @@ describe('user Model', () => {
 
         expect(res).toEqual([
             {
-                id: 2,
+                id: 3,
                 first_name: 'first name',
                 last_name: 'last name',
             },

@@ -37,12 +37,12 @@ describe('User routes', () => {
             expect(res.statusCode).toBe(200);
             expect(res.body).toEqual({
                 user: {
-                    id: 1,
+                    id: 2,
                     first_name: 'first_name',
                     last_name: 'last_name',
                 },
                 token: jwt.sign(
-                    { id: 1, first_name: 'first_name' },
+                    { id: 2, first_name: 'first_name' },
                     process.env.TOKEN_SECRET as unknown as string
                 ),
             });
@@ -61,13 +61,13 @@ describe('User routes', () => {
     describe('GET /users/:id', () => {
         it('Should return 200 if user exits', async () => {
             const res = await request(app)
-                .get('/users/1')
+                .get('/users/2')
                 .set('Authorization', `Bearer ${token}`);
             expect(res.statusCode).toBe(200);
         });
         it("Should return 404 if user doesn't exit with token", async () => {
             const res = await request(app)
-                .get('/users/4')
+                .get('/users/10')
                 .set('Authorization', `Bearer ${token}`);
             expect(res.statusCode).toBe(404);
         });
@@ -75,13 +75,13 @@ describe('User routes', () => {
 
     describe('GET /users/:id/orders', () => {
         it('Should return 401 on GET /users/:id/orders without token', async () => {
-            const res = await request(app).get('/users/1/orders');
+            const res = await request(app).get('/users/2/orders');
             expect(res.statusCode).toBe(401);
         });
 
         it('Should return 200 if token is provided', async () => {
             const res = await request(app)
-                .get('/users/1/orders')
+                .get('/users/2/orders')
                 .set('Authorization', `Bearer ${token}`);
             expect(res.statusCode).toBe(200);
         });

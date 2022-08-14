@@ -14,7 +14,7 @@ describe('Product Model', () => {
         };
         const res = await table.create(prod);
         expect(res).toEqual({
-            id: 1,
+            id: 2,
             name: 'product name',
             price: 3,
             category: 'product category',
@@ -22,9 +22,9 @@ describe('Product Model', () => {
     });
 
     it('Should show the correct object', async () => {
-        const res = await table.show(1);
+        const res = await table.show(2);
         expect(res).toEqual({
-            id: 1,
+            id: 2,
             name: 'product name',
             price: 3,
             category: 'product category',
@@ -35,7 +35,7 @@ describe('Product Model', () => {
         const res = await table.index();
         expect(res).toEqual([
             {
-                id: 1,
+                id: 2,
                 name: 'product name',
                 price: 3,
                 category: 'product category',
