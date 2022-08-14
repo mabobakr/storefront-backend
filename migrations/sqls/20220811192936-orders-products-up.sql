@@ -1,1 +1,1 @@
-CREATE TABLE orders_products(productId INTEGER REFERENCES products, orderId INTEGER REFERENCES orders, quantity INTEGER);
+CREATE TABLE orders_products(product_id INTEGER REFERENCES products, order_id INTEGER REFERENCES orders, quantity INTEGER);
