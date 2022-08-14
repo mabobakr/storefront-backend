@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "npx tsc",
+    "start": "node build/server",
     "jasmine": "jasmine",
     "watch": "tsc-watch --rootDir ./src --watch --outDir ./build --onSuccess \"node build/server.js\"",
     "test": "set ENV=test& db-migrate db:drop storefront_test && db-migrate db:create storefront_test && db-migrate --env test up && npm run build && npm run jasmine",
